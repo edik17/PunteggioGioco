@@ -1,0 +1,10 @@
+﻿@* Views/Home/Index.cshtml *@
+@model TopSecret.Models.User
+@{
+    ViewBag.Title = "Home";
+}
+<h2>Welcome, @Model.Username!</h2>
+<p>Your points: @Model.Points</p>
+<form method="post" action="@Url.Action("AddPoint", "Home")">
+    <button type="submit">+1 Point</button>
+</form>

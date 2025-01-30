@@ -1,0 +1,19 @@
+﻿@* Views/Leaderboard/Index.cshtml *@
+@model List<TopSecret.Models.User>
+@{
+    ViewBag.Title = "Leaderboard";
+}
+<h2>Leaderboard</h2>
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Points</th>
+    </tr>
+    @foreach (var user in Model)
+    {
+        <tr>
+            <td>@user.Username</td>
+            <td>@user.Points</td>
+        </tr>
+    }
+</table>

@@ -1,0 +1,14 @@
+﻿@* Views/Account/Register.cshtml *@
+@{
+    ViewBag.Title = "Register";
+}
+<h2>Register</h2>
+<form method="post">
+    <input type="text" name="username" placeholder="Username" required />
+    <input type="password" name="pin" placeholder="PIN" required />
+    <button type="submit">Register</button>
+</form>
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <p>@ViewBag.Message</p>
+}

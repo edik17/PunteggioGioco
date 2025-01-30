@@ -1,0 +1,14 @@
+﻿@* Views/Account/Login.cshtml *@
+@{
+    ViewBag.Title = "Login";
+}
+<h2>Login</h2>
+<form method="post">
+    <input type="text" name="username" placeholder="Username" required />
+    <input type="password" name="pin" placeholder="PIN" required />
+    <button type="submit">Login</button>
+</form>
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <p>@ViewBag.Message</p>
+}
