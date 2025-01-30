@@ -7,16 +7,39 @@
 <!-- Importa Bootstrap (se non è già incluso nel layout) -->
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<!-- Stili per l'animazione delle gocce -->
+<style>
+    .drop {
+        position: absolute;
+        width: 10px;
+        height: 10px;
+        background-color: rgba(0, 162, 255, 0.7);
+        border-radius: 50%;
+        animation: drop-fall 1s ease-out forwards;
+    }
+
+    @keyframes drop-fall {
+        0% {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+        100% {
+            transform: translateY(50px) scale(0.5);
+            opacity: 0;
+        }
+    }
+</style>
+
 <div class="container mt-5">
     <div class="card shadow-lg p-4">
         <h2 class="text-center mb-3">Benvenuto, @Model.Username! 🎉</h2>
 
         <div class="text-center">
-            <p class="fs-4">I tuoi punti: <span class="fw-bold text-primary">@Model.Points</span></p>
+            <p class="fs-4">I tuoi punti: <span class="fw-bold text-primary" id="points">@Model.Points</span></p>
 
             <!-- Pulsante per aggiungere punti -->
-            <form method="post" action="@Url.Action("AddPoint", "Home")" class="d-inline">
-                <button type="submit" class="btn btn-success btn-lg">+1 Punto</button>
+            <form method="post" action="@Url.Action("AddPoint", "Home")" class="d-inline" id="pointForm">
+                <button type="submit" class="btn btn-success btn-lg" id="pointButton">+1 Punto</button>
             </form>
         </div>
 
@@ -42,6 +65,33 @@
         }
     </div>
 </div>
+
+<!-- Script per l'animazione delle gocce -->
+<script>
+    document.getElementById("pointButton").addEventListener("click", function(event) {
+        event.preventDefault(); // Evita che la pagina si ricarichi subito
+
+        let button = event.target;
+        let rect = button.getBoundingClientRect();
+
+        for (let i = 0; i < 5; i++) {
+            let drop = document.createElement("div");
+            drop.classList.add("drop");
+            drop.style.left = `${rect.left + rect.width / 2 + (Math.random() * 30 - 15)}px`;
+            drop.style.top = `${rect.top + rect.height / 2}px`;
+            document.body.appendChild(drop);
+
+            setTimeout(() => {
+                drop.remove();
+            }, 1000);
+        }
+
+        // Dopo un piccolo ritardo, invia il form
+        setTimeout(() => {
+            document.getElementById("pointForm").submit();
+        }, 200);
+    });
+</script>
 
 <!-- Opzionale: Aggiungi JavaScript di Bootstrap se necessario -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
