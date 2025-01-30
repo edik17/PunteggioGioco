@@ -3,13 +3,11 @@ using TopSecret.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Configura MySQL con Pomelo
+// Usa PostgreSQL invece di MySQL
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseMySql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
-        new MySqlServerVersion(new Version(8, 0, 31)))); // Assicurati che la versione sia corretta
+    options.UseNpgsql(
+        builder.Configuration.GetConnectionString("DefaultConnection")));
 
-// Altri servizi
 builder.Services.AddControllersWithViews();
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
@@ -36,12 +34,5 @@ app.UseSession();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-// Inizializza il database
-using (var scope = app.Services.CreateScope())
-{
-    var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-    dbContext.Database.Migrate(); // Assicura che il database sia aggiornato
-}
 
 app.Run();

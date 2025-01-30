@@ -23,7 +23,7 @@ namespace TopSecret.Controllers
                 return RedirectToAction("Login", "Account");
 
             var sortedUsers = _context.Users.OrderByDescending(u => u.Points).ToList();
-            return View(sortedUsers);
+            return View(sortedUsers); // Assicurati che passi la lista alla View
         }
     }
 }

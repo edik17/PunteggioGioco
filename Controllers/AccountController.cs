@@ -53,4 +53,11 @@ public class AccountController : Controller
         return View();
     }
 
+    [HttpPost]
+    public IActionResult Logout()
+    {
+        HttpContext.Session.Clear();
+        return RedirectToAction("Login");
+    }
+
 }
