@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using TopSecret.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -18,6 +18,23 @@ builder.Services.AddSession(options =>
 });
 
 var app = builder.Build();
+
+var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
+
+if (string.IsNullOrEmpty(dbPassword))
+{
+    Console.WriteLine(" ATTENZIONE: La variabile d'ambiente DB_PASSWORD non è stata trovata!");
+}
+else
+{
+    Console.WriteLine(" La variabile DB_PASSWORD è stata letta correttamente.");
+}
+
+// Crea manualmente la stringa di connessione per il debug
+var connectionString = $"Host=dpg-cudnflq3esus73c810ug-a.frankfurt-postgres.render.com;Port=5432;Database=punteggio;Username=punteggio_user;Password={dbPassword};";
+
+Console.WriteLine($" Stringa di connessione usata: {connectionString}");
+
 
 if (!app.Environment.IsDevelopment())
 {
