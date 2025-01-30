@@ -3,16 +3,16 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /app
 
 # Copia solo il file .csproj per ottimizzare la cache
-COPY PunteggioGioco/PunteggioGioco.csproj ./PunteggioGioco/
-WORKDIR /app/PunteggioGioco
+COPY TopSecret/TopSecret.csproj ./TopSecret/
+WORKDIR /app/TopSecret
 RUN dotnet restore
 
 # Copia il resto del progetto e compila
-COPY PunteggioGioco/. ./PunteggioGioco/
+COPY TopSecret/. ./TopSecret/
 RUN dotnet publish -c Release -o /publish
 
 # Usa l'immagine runtime di .NET per eseguire l'app
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=build /publish .
-CMD ["dotnet", "PunteggioGioco.dll"]
+CMD ["dotnet", "TopSecret.dll"]
