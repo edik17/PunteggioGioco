@@ -25,8 +25,8 @@ public class AccountController : Controller
             ViewBag.Message = "Username già in uso.";
             return View();
         }
+        var user = new User { Username = username, Pin = pin, Points = 0, CreatedAt = DateTime.UtcNow };
 
-        var user = new User { Username = username, Pin = pin, Points = 0 };
         _context.Users.Add(user);
         _context.SaveChanges();
 

@@ -3,7 +3,6 @@ using TopSecret.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Legge la password dal sistema operativo (Render)
 var dbPassword = Environment.GetEnvironmentVariable("DB_PASSWORD");
 
 if (string.IsNullOrEmpty(dbPassword))
@@ -15,10 +14,14 @@ else
     Console.WriteLine(" La variabile DB_PASSWORD è stata letta correttamente.");
 }
 
-// Costruisce la stringa di connessione
+// Costruisce la stringa di connessione con la password letta
 var connectionString = $"Host=dpg-cudnflq3esus73c810ug-a.frankfurt-postgres.render.com;Port=5432;Database=punteggio;Username=punteggio_user;Password={dbPassword};";
 
 Console.WriteLine($" Stringa di connessione usata: {connectionString}");
+
+// Configura PostgreSQL
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 // Configura PostgreSQL
 builder.Services.AddDbContext<AppDbContext>(options =>

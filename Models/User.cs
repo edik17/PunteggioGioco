@@ -12,6 +12,8 @@ namespace TopSecret.Models
 
         [Required]
         public string Pin { get; set; } = string.Empty; // Imposta un valore di default
+        [Required]
+        public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
 
         public int Points { get; set; } = 0;
     }
