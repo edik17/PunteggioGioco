@@ -11,11 +11,12 @@
 <style>
     .drop {
         position: absolute;
-        width: 10px;
-        height: 10px;
-        background-color: rgba(0, 162, 255, 0.7);
+        width: 45px; /* Gocce più grandi */
+        height: 45px;
+        background-color: rgba(0, 162, 255, 0.8);
         border-radius: 50%;
-        animation: drop-fall 1s ease-out forwards;
+        animation: drop-fall 1.5s ease-out forwards; /* Durata aumentata */
+        opacity: 0.9;
     }
 
     @@keyframes drop-fall {
@@ -23,8 +24,13 @@
             transform: translateY(0) scale(1);
             opacity: 1;
         }
+
+        50% {
+            transform: translateY(30px) scale(1.2); /* Aggiunto un leggero ingrandimento */
+        }
+
         100% {
-            transform: translateY(50px) scale(0.5);
+            transform: translateY(80px) scale(0.8);
             opacity: 0;
         }
     }
@@ -72,22 +78,25 @@
         let button = event.target;
         let rect = button.getBoundingClientRect();
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 7; i++) { // Più gocce generate
             let drop = document.createElement("div");
             drop.classList.add("drop");
-            drop.style.left = `${rect.left + rect.width / 2 + (Math.random() * 30 - 15)}px`;
-            drop.style.top = `${rect.top + rect.height / 2}px`;
+
+            // Posizione iniziale random vicino al bottone
+            drop.style.left = `${rect.left + rect.width / 2 + (Math.random() * 40 - 20)}px`;
+            drop.style.top = `${rect.top + rect.height / 2 + (Math.random() * 10 - 5)}px`;
+
             document.body.appendChild(drop);
 
             setTimeout(() => {
                 drop.remove();
-            }, 1000);
+            }, 1500); // Tempo aumentato per rimuoverle dopo l'animazione
         }
 
         // Ritardo nell'invio del form per visualizzare l'animazione
         setTimeout(() => {
             document.getElementById("pointForm").submit();
-        }, 200);
+        }, 300);
     });
 </script>
 
